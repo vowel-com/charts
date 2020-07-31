@@ -119,6 +119,9 @@ spec:
             value: {{ template "schema-registry.kafkaStore.bootstrapServers" . }}
           - name: SCHEMA_REGISTRY_KAFKASTORE_GROUP_ID
             value: {{ template "schema-registry.kafkaStore.groupId" . }}
+          # see https://docs.confluent.io/current/schema-registry/installation/config.html#schema-registry-group-id  
+          - name: SCHEMA_REGISTRY_SCHEMA_REGISTRY_GROUP_ID
+            value: {{- .Release.Namespace -}}  
           {{ range $configName, $configValue := .Values.configurationOverrides }}
           - name: SCHEMA_REGISTRY_{{ $configName | replace "." "_" | upper }}
             value: {{ $configValue | quote }}
